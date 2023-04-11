@@ -4,11 +4,11 @@ import os
 
 class File_Services:
 
-    def Download_File(file_path: str, file_name: str) -> str:
+    def Download_File(file_path: str, saved_file_name: str) -> str:
         url = file_path
-        file_name = os.path.join(os.path.expanduser('~'), 'Downloads', file_name)
-        urllib.request.urlretrieve(url, file_name)
-        return file_name
+        saved_file_name = os.path.join(os.path.expanduser('~'), 'Downloads', saved_file_name)
+        urllib.request.urlretrieve(url, saved_file_name)
+        return saved_file_name
 
     def Read_File(file_name: str) -> str:
         content = ''
@@ -19,7 +19,7 @@ class File_Services:
         return content
 
 if __name__ == '__main__':
-    file_service = FileServices
+    file_service = File_Services
 
     downloaded_file = file_service.Download_File('https://lk.globtelecom.ru/upload/test_prog1.csv', 'test_prog1.csv')
 
