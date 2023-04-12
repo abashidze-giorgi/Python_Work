@@ -20,7 +20,7 @@ class DataService:
     @staticmethod
     def diversification_data_and_save_files(data: list[list[dict[str, str | int]]], encoding: str):
         for datalist in data:
-            filename = os.path.join(os.path.expanduser('~'), 'Documents', 'my_output_folder', datalist[0]["salary_pay_method"]+'_h.cvs')
+            filename = os.path.join(os.path.expanduser('~'), 'Documents', 'my_output_folder', datalist[0]["salary_pay_method"]+'_h.csv')
             with open(filename, 'w', encoding=encoding) as f:
                 for item in datalist:
                     f.write("%s\n" % item)
