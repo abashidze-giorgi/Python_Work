@@ -47,7 +47,7 @@ class DataService:
                 if normalize_phone_number(line[0]):
                     birth_year = line[6].split('.')[2]
                     age = get_person_age(birth_year)
-                    person_dict = dict(name=line[1], full_name=line[2], phone=line[0], birth_day=line[6], age=age,
+                    person_dict = dict(ИО=line[1], ФИО=line[2], Телефон=line[0], Дата_рождения=line[6], Возраст=age,
                                        salary_pay_method=line[5])
                     if line[5] == "pos":
                         pos_h.append(person_dict)
