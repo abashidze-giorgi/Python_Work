@@ -12,7 +12,7 @@ def normalize_phone_number(phone_number: str) -> str:
     if len(digits) == 11:
         return digits
     else:
-        return None
+        return ''
 
 
 class DataService:
@@ -20,7 +20,8 @@ class DataService:
     @staticmethod
     def diversification_data_and_save_files(data: list[list[dict[str, str | int]]], encoding: str):
         for datalist in data:
-            filename = os.path.join(os.path.expanduser('~'), 'Documents', 'my_output_folder', datalist[0]["salary_pay_method"]+'_h.csv')
+            filename = os.path.join(os.path.expanduser('~'), 'Documents', 'my_output_folder',
+                                    datalist[0]["salary_pay_method"]+'_h.csv')
             with open(filename, 'w', encoding=encoding) as f:
                 for item in datalist:
                     f.write("%s\n" % item)
@@ -44,7 +45,7 @@ class DataService:
                 Люди с кривыми номерами никуда записываться не должны.
                 """
 
-                if normalize_phone_number(line[0]):
+                if normalize_phone_number(line[0]) != '':
                     birth_year = line[6].split('.')[2]
                     age = get_person_age(birth_year)
                     person_dict = dict(ИО=line[1], ФИО=line[2], Телефон=line[0], Дата_рождения=line[6], Возраст=age,
