@@ -19,15 +19,14 @@ class DataService:
 
     @staticmethod
     def diversification_data_and_save_files(data: str, encoding: str):
-        filename = ''
-        for list in data:
-            filename = os.path.join(os.path.expanduser('~'), 'Documents', 'my_output_folder', list[0]["salary_pay_method"]+'_h.cvs')
+        for datalist in data:
+            filename = os.path.join(os.path.expanduser('~'), 'Documents', 'my_output_folder', datalist[0]["salary_pay_method"]+'_h.cvs')
             with open(filename, 'w', encoding=encoding) as f:
-                for item in list:
+                for item in datalist:
                     f.write("%s\n" % item)
 
     @staticmethod
-    def parse_file(file_path: str, encoding: str) -> str:
+    def parse_file(file_path: str, encoding: str) -> list[list[dict[str, str | int]] | list[dict[str, str | int]]]:
         combined_list = []
         cash_h = []
         pos_h = []
@@ -39,23 +38,12 @@ class DataService:
                 for zero in range(0, 4):  # удаление 4 пустых значений из листа.
                     line.remove('')
                 """
-                Кривые номера при парсинге должны принтануться в консоли с указанием номера строки где были данные найдены, 
-                а также, именем-отчеством. Формат: 
-                "ИО: <имя-отчество>; Телефон: <телефон>". 
-                Люди с кривыми номерами никуда записываться не должны. 
+                Кривые номера при парсинге должны принтануться в консоли с указанием номера строки где были данные 
+                найдены,
+                а также, именем-отчеством. Формат:"ИО: <имя-отчество>; Телефон: <телефон>".
+                Люди с кривыми номерами никуда записываться не должны.
                 """
-                """
-                1: телефон
-                2:ио
-                3:фио
-                4:зарплата
-                5:дата выдачи зарплаты
-                6:метод выдачи зарплаты
-                7:дата рождения
-                8:?
-                9:зарплата
-                10:?
-                """
+
                 if normalize_phone_number(line[0]):
                     birth_year = line[6].split('.')[2]
                     age = get_person_age(birth_year)
