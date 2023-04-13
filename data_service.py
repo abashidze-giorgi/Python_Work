@@ -58,4 +58,7 @@ class DataService:
                     print(invalid_person)
         combined_list.append(pos_h)
         combined_list.append(cash_h)
+        print('количество записей в файле - ' + 'pos_h.csv:', len(pos_h))
+        print('количество записей в файле - ' + 'cash_h.csv:', len(cash_h))
+        print('всего записей:', len(cash_h) + len(pos_h))
         return combined_list
