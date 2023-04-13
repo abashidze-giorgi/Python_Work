@@ -33,9 +33,7 @@ class DataService:
         pos_h = []
         with open(file_path, 'r', encoding=encoding) as f:
             for i, line in enumerate(f.readlines()):
-                # for line in f.readlines():
                 line = line.split(";")
-
                 for zero in range(0, 4):  # удаление 4 пустых значений из листа.
                     line.remove('')
                 """
