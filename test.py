@@ -24,6 +24,7 @@ def read_file():
         for line in reader:
             print(line)
 
+
 def main():
     download_file()
     read_file()
