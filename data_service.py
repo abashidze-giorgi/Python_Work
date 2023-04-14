@@ -20,13 +20,17 @@ class DataService:
     @staticmethod
     def diversification_data_and_save_files(data: list[list[dict[str, str | int]]], encoding: str)->list():
         file_names = []
+
         for datalist in data:
+            cur_id=1
             filename = os.path.join(os.path.expanduser('~'), 'Documents', 'my_output_folder',
                                     datalist[0]["salary_pay_method"]+'_h.csv')
             file_names.append(filename)
             with open(filename, 'w', encoding=encoding) as f:
                 for item in datalist:
+                    item["id"] = cur_id
                     f.write("%s\n" % item)
+                    cur_id += 1
         return  file_names
     @staticmethod
     def parse_file(file_path: str, encoding: str) -> list[list[dict[str, str | int]] | list[dict[str, str | int]]]:
@@ -48,7 +52,7 @@ class DataService:
                 if normalize_phone_number(line[0]) != '':
                     birth_year = line[6].split('.')[2]
                     age = get_person_age(birth_year)
-                    person_dict = dict(ИО=line[1], ФИО=line[2], Телефон=line[0], Дата_рождения=line[6], Возраст=age,
+                    person_dict = dict(id=i, name=line[1], fullname=line[2], phone=line[0], bd=line[6], age=age,
                                        salary_pay_method=line[5])
                     if line[5] == "pos":
                         pos_h.append(person_dict)
@@ -72,18 +76,19 @@ class DataService:
 
     """
     def print_non_unique_phone_numbers(files: list, encoding: str):
-        unique_numbers_list = []
-        non_unique_numbers_list = []
+
         for file in files:
+            unique_numbers_list = []
+            non_unique_numbers_list = []
             if os.path.exists(file):
                 with open(file, 'r', encoding=encoding) as f:
                     for line in enumerate(f.readlines()):
-                        phone = line[1].split(",")[2].split(":")[1]
+                        phone = line[1].split(",")[3].split(":")[1]
                         if phone not in unique_numbers_list:
                             unique_numbers_list.append(phone)
                         else:
-                            non_unique_numbers_list.append(phone)
+                            non_unique_numbers_list.append(line)
 
             print("Non unique numbers in", file + ":", len(non_unique_numbers_list))
             for val in non_unique_numbers_list:
-                print(val)
+                print("Person id", val[1].split(",")[0].split(":")[1], "Phone number:", val[1].split(",")[3].split(":")[1])
