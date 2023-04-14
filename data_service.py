@@ -8,10 +8,11 @@ def get_person_age(birth_day: str) -> int:
 
 
 def normalize_phone_number(phone_number: str) -> str:
-    for ch in phone_number:
-        digits = ''
+    digits = ''
+    for char in phone_number:
+
         if char.isdigit():
-            digits.join(char)
+            digits += char
     if len(digits) == 11:
         return digits
     else:
@@ -51,7 +52,7 @@ class DataService:
                     # i+1 потому, что при подсчете строк человек начинает 1, а не с нуля.
                     name = person[1]
                     phone = person[0]
-                    invalid_person = ("номер строки:", i + 1, "ИО:", name, "\nТелефон:", phone)
+                    invalid_person = ("номер строки:", iter_num + 1, "ИО:", name, "\nТелефон:", phone)
                     print(invalid_person)
         combined_list.append(pos_h)
         combined_list.append(cash_h)
