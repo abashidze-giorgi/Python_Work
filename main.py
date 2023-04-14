@@ -9,5 +9,6 @@ if __name__ == '__main__':
     file_name = services.download_file("https://lk.globtelecom.ru/upload/test_prog1.csv", output_dir)
     encoding = services.determine_encoding(file_name)
     data = ds.DataService.parse_file(file_name, encoding)
-    ds.DataService.diversification_data_and_save_files(data, encoding)
+    new_files = ds.DataService.diversification_data_and_save_files(data, encoding)
+    ds.DataService.print_non_unique_phone_numbers(new_files, encoding)
     services.delete_file(file_name)
