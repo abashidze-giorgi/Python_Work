@@ -10,3 +10,4 @@ if __name__ == '__main__':
     encoding = services.determine_encoding(file_name)
     data = ds.DataService.parse_file(file_name, encoding)
     ds.DataService.diversification_data_and_save_files(data, encoding)
+    services.delete_file(file_name)
