@@ -36,8 +36,8 @@ class DataService:
                 а также, именем-отчеством. Формат:"ИО: <имя-отчество>; Телефон: <телефон>".
                 Люди с кривыми номерами никуда записываться не должны.
                 """
-                phone_number = person[0]
-                if normalize_phone_number(phone_number) != '':
+                phone_number = normalize_phone_number(person[0])
+                if phone_number != '':
                     birth_year = person[6].split('.')[2]
                     age = get_person_age(birth_year)
                     person_dict = dict(id=iter_num, name=person[1], fullname=person[2], phone=phone_number,
