@@ -76,7 +76,7 @@ class DataService:
                         else:
                             non_unique_numbers_list.append(line)
 
-            print("Non unique numbers in", file + ":", len(non_unique_numbers_list))
+            print("Non unique numbers in", file, "-", len(non_unique_numbers_list))
             for val in non_unique_numbers_list:
                 print("Person id", val[1].split(",")[0].split(":")[1], "Phone number:",
                       val[1].split(",")[3].split(":")[1])
