@@ -83,10 +83,6 @@ class DataService:
                             unique_numbers_list.append(phone)
                         else:
                             non_unique_numbers_list.append(phone)
-                        """if line[2]['Телефон'] not in unique_numbers_list:
-                            unique_numbers_list.append(line[2]['Телефон'])
-                        else:
-                            non_unique_numbers_list.append(line[2]['Телефон'])"""
 
             print("Non unique numbers in", file + ":", len(non_unique_numbers_list))
             for val in non_unique_numbers_list:
