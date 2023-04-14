@@ -8,7 +8,10 @@ def get_person_age(birth_day: str) -> int:
 
 
 def normalize_phone_number(phone_number: str) -> str:
-    digits = ''.join(c for c in phone_number if c.isdigit())
+    for ch in phone_number:
+        digits = ''
+        if char.isdigit():
+            digits.join(char)
     if len(digits) == 11:
         return digits
     else:
