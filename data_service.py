@@ -22,10 +22,15 @@ def normalize_phone_number(phone_number: str) -> str:
 class DataService:
 
     @staticmethod
-    def parse_file(file_path: str, encoding: str) -> list[list[dict[str, str | int]] | list[dict[str, str | int]]]:
+    def parse_file(file_path: str, encoding: str) -> dict:
         combined_list = []
         cash_h = []
         pos_h = []
+        
+        data = {
+            'cache': [],
+            'pos': []
+        }
         with open(file_path, 'r', encoding=encoding) as f:
             for iter_num, line in enumerate(f.readlines()):
                 person = line.split(";")
@@ -41,13 +46,16 @@ class DataService:
                 if phone_number != '':
                     birth_year = person[6].split('.')[2]
                     age = get_person_age(birth_year)
-                    person_dict = dict(id=iter_num, name=person[1], fullname=person[2], phone=phone_number,
+                    person_dict = {
+                        'id': iter_num,
+                        'name': person[1]
+                    }
+                    person_dict = dict(id=iter_num, fullname=person[2], phone=phone_number,
                                        bd=person[6], age=age, salary_pay_method=person[5])
                     pay_method = person[5]
-                    if pay_method == "pos":
-                        pos_h.append(person_dict)
-                    else:
-                        cash_h.append(person_dict)
+                    
+                    data[pay_method].append(person_dict)
+                    
                 else:
                     # iter_num+1 потому, что при подсчете строк человек начинает 1, а не с нуля.
                     name = person[1]
@@ -60,6 +68,12 @@ class DataService:
         print('количество записей в файле - ' + 'cash_h.csv:', len(cash_h))
         print('всего записей:', len(cash_h) + len(pos_h))
         return combined_list
+    
+    
+#     for p_type, p_data in parse_file().items():
+#         for item in p_data:
+#             print(p_type, item['id])
+    
 
     """5. По завершении парсинга файла и сохранения данных в файлы, в консоль, в табличном виде, должны принтануться 
     следующие данные: 5.1. Кол-во не уникальных номеров телефонов, и сами номера 5.2. Статистика по людям: сколько 
