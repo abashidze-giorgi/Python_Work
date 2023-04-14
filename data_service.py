@@ -1,7 +1,7 @@
 import os
 import datetime
 
-
+phone_number_len = 11
 def get_person_age(birth_day: str) -> int:
     age = datetime.datetime.now().year - int(birth_day)
     return age
@@ -13,7 +13,7 @@ def normalize_phone_number(phone_number: str) -> str:
 
         if char.isdigit():
             digits += char
-    if len(digits) == 11:
+    if len(digits) == phone_number_len:
         return digits
     else:
         return ''
