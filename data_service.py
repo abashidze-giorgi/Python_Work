@@ -49,7 +49,7 @@ class DataService:
                     else:
                         cash_h.append(person_dict)
                 else:
-                    # i+1 потому, что при подсчете строк человек начинает 1, а не с нуля.
+                    # iter_num+1 потому, что при подсчете строк человек начинает 1, а не с нуля.
                     name = person[1]
                     phone = person[0]
                     invalid_person = ("номер строки:", iter_num + 1, "ИО:", name, "\nТелефон:", phone)
