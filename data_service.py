@@ -89,26 +89,26 @@ class DataService:
             if os.path.exists(file):
                 with open(file, 'r', encoding=encoding) as f:
                     for line in enumerate(f.readlines()):
-                        phone = line[1].split(",")[3].split(":")[1]
+                        phone = line[1].split(',')[3].split(':')[1]
                         if phone not in unique_numbers_list:
                             unique_numbers_list.append(phone)
                         else:
                             non_unique_numbers_list.append(line)
 
-            print("Non unique numbers in", file, "-", len(non_unique_numbers_list))
+            print('Non unique numbers in', file, '-', len(non_unique_numbers_list))
             for val in non_unique_numbers_list:
-                print("Person id", val[1].split(",")[0].split(":")[1], "Phone number:",
-                      val[1].split(",")[3].split(":")[1])
+                print('Person id', val[1].split(',')[0].split(':')[1], 'Phone number:',
+                      val[1].split(',')[3].split(':')[1])
 
-    def diversification_data_and_save_files(self: dict, encoding: str) -> list():
+    def diversification_data_and_save_files(data: dict, encoding: str) -> list():
         file_names = []
 
-        for data_list in self\
-                :
+        for dictionary in data.items():
+
             filename = os.path.join(os.path.expanduser('~'), 'Documents', 'my_output_folder',
                                     datalist + '_h.csv')
             file_names.append(filename)
             with open(filename, 'w', encoding=encoding) as f:
                 for item in datalist:
-                    f.write("%s\n" % item)
+                    f.write('%s\n' % item)
         return file_names
