@@ -1,5 +1,6 @@
 import os
 import datetime
+import re
 
 phone_number_len = 11
 
@@ -10,11 +11,8 @@ def get_person_age(birth_day: str) -> int:
 
 
 def normalize_phone_number(phone_number: str) -> str:
-    digits = "\D, %s, {phone_number}"
-    for char in phone_number:
+    digits = re.sub('[^0-9]', "", phone_number)
 
-        if char.isdigit():
-            digits += char
     if len(digits) == phone_number_len:
         return digits
     else:
