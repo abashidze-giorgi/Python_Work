@@ -17,7 +17,9 @@ class FileWork:
         saved_file_path = self.__download_file(url, output_directory)
         self.file_encoding = self.__determine_encoding(saved_file_path)
         big_data = self.__parse_file(saved_file_path, self.file_encoding)
+        self.__delete_file(saved_file_path)
         self.file_list = self.__diversification_data_and_save_files(big_data, output_directory, self.file_encoding)
+        #self.__print_non_unique_phone_numbers()
 
     def __download_file(self, url: str, output_directory: str) -> str:
         saved_file_name = os.path.join(output_directory, os.path.basename(url))
@@ -114,28 +116,31 @@ class FileWork:
 
     """5. По завершении парсинга файла и сохранения данных в файлы, в консоль, в табличном виде, должны принтануться 
         следующие данные: 5.1. Кол-во не уникальных номеров телефонов, и сами номера 5.2. Статистика по людям: сколько 
-        человек в какой год родилось, кол-во однофамильцев 
+        человек в какой год родилось, кол-во однофамильцев.
 
         """
 
-    def print_non_unique_phone_numbers(self):
+    def FindNonUniqueSureNames(self):
+        none
 
-        for file in file_paths:
+    def __print_non_unique_phone_numbers(self):
+
+        for file in self.file_list:
             unique_numbers_list = []
             non_unique_numbers_list = []
             if os.path.exists(file):
-                with open(file, 'r', encoding=encoding) as f:
+                with open(file, 'r', encoding=self.file_encoding) as f:
                     for line in enumerate(f.readlines()):
-                        phone = line[1].split(',')[3].split(':')[1]
+                        person = list(line[1].split(','))
+                        phone = person[3]
                         if phone not in unique_numbers_list:
                             unique_numbers_list.append(phone)
                         else:
-                            non_unique_numbers_list.append(line)
+                            non_unique_numbers_list.append(person)
 
             print('Non unique numbers in', file, '-', len(non_unique_numbers_list))
             for val in non_unique_numbers_list:
-                print('Person id', val[1].split(',')[0].split(':')[1], 'Phone number:',
-                      val[1].split(',')[3].split(':')[1])
+                print(val['id'], val['fullname'], val['Phone number'])
 
     def __delete_file(self, filepath: str):
         # Проверьте, существует ли файл
