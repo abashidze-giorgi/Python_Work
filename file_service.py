@@ -86,7 +86,8 @@ class FileWork:
                 data[pay_method].append(person)
 
         for file in data:
-            print(f'количество записей в файле - {file.split(",")[0]}_h.csv: {len(data[file])}')
+            file_prefix = file.split(",")[0]
+            print(f'количество записей в файле - {file_prefix}_h.csv: {len(data[file])}')
         return data
 
     def __normalize_phone_number(self, phone_number: str) -> str:
