@@ -76,6 +76,7 @@ class FileWork:
                 else:
                     # iter_num+1 потому, что при подсчете строк человек начинает 1, а не с нуля.
                     list_len = len(data['bad']) + 1
+                    pay_method = 'bad'
                     person = {
                         "номер строки:": list_len,
                         "ФИО:": name,
@@ -84,10 +85,8 @@ class FileWork:
                     }
                 data[pay_method].append(person)
 
-        print('количество записей в файле - ' + 'pos_h.csv:', len(data['pos']))
-        print('количество записей в файле - ' + 'cash_h.csv:', len(data['cash']))
-        print('количество записей в файле - ' + 'cards_h.csv:', len(data['cards']))
-        print('всего записей:', len(data['pos']) + len(data['cash']) + len(data['cards']))
+        for file in data:
+            print(f'количество записей в файле - {file.split(",")[0]}_h.csv: {len(data[file])}')
         return data
 
     def __normalize_phone_number(self, phone_number: str) -> str:
