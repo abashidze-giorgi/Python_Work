@@ -1,4 +1,4 @@
-from foo import FileWork
+from file_service import FileWork
 import os
 
 output_foleder_name = "Documents\\my_output_folder"
