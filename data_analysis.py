@@ -136,9 +136,10 @@ class DataAnalysis:
                 count[year] += 1
             else:
                 count[year] = 1
-        result = [
-            {"year": year, "count": count[year]} for year in count
-            ]
+        result = []
+        for year in count:
+            year_count = {"year": year, "count": count[year]}
+            result.append(year_count)
 
         self.sample_of_print(result, 'сколько человек в какой год родились')
     def sample_of_print(self, data, message: str):
