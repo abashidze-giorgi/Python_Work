@@ -1,8 +1,9 @@
-import os
 import re
+import os
 import datetime
 import urllib.request
 import get_file_encoding
+import delete_file
 import charset_normalizer as csn
 import read_file_and_return_list
 
@@ -16,7 +17,7 @@ class FileWork:
     def __init__(self, url: str, output_directory: str):
         saved_file_path = self.__download_file(url, output_directory)
         big_data = self.__parse_file(saved_file_path)
-        self.__delete_file(saved_file_path)
+        delete_file.delete_file(saved_file_path)
         self.file_list = self.__diversification_data_and_save_files(big_data, output_directory)
 
     def __download_file(self, url: str, output_directory: str) -> str:
@@ -51,6 +52,7 @@ class FileWork:
             normalize_phone_number = self.__normalize_phone_number(phone_number)
             if normalize_phone_number == '':
                 pay_method = 'bad'
+                normalize_phone_number = person[0]
             list_len = len(data[pay_method]) + 1
             person = {
                 'id': list_len,
@@ -95,9 +97,4 @@ class FileWork:
                     f.write('%s\n' % item)
         return file_names
 
-    def __delete_file(self, filepath: str):
-        # Проверьте, существует ли файл
-        if os.path.exists(filepath):
-            # Удалить файл
-            os.remove(filepath)
-            print('File -', filepath, 'deleted.')
+
