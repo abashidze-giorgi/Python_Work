@@ -21,6 +21,7 @@ class DataAnalysis:
         self.find_and_print_repeteably_phone_numbers(list_of_file_names)
         self.find_same_last_name_persons(list_of_file_names)
         self.birth_year_counter(list_of_file_names)
+
     def get_file_names_from_directory(self, ) -> list:
         res = []
 
@@ -65,7 +66,8 @@ class DataAnalysis:
                 except:
                     print('something gone wrong in "find_and_print_repeteably_phone_numbers" method')
         if non_unique_phone_count > 0:
-            self.sample_of_print(non_unique_phone_number_list, f'Повторяющиеся номера телефонов в файлах: {non_unique_phone_count}')
+            self.sample_of_print(non_unique_phone_number_list,
+                                 f'Повторяющиеся номера телефонов в файлах: {non_unique_phone_count}')
 
     def print_bad_phone_numbers_and_delete_bad_file(self, list_of_files):
         dict_data = []
@@ -119,8 +121,6 @@ class DataAnalysis:
 
     def birth_year_counter(self, list_of_files):
         temp_list = []
-        checked_year = []
-        birth_year_counter = []
         for name in list_of_files:
             file_path = os.path.join(self.dir_path, name)
             if os.path.isfile(os.path.join(self.dir_path, name)):
@@ -142,6 +142,7 @@ class DataAnalysis:
             result.append(year_count)
 
         self.sample_of_print(result, 'сколько человек в какой год родились')
+
     def sample_of_print(self, data, message: str):
         try:
             headers = data[0].keys()
@@ -149,6 +150,5 @@ class DataAnalysis:
             print(message)
             table = [[row[col] for col in headers] for row in data]
             print(tabulate(table, headers=headers, tablefmt='fancy_grid'))
-        except Exception:
-            logging.error('Failed.', exc_info=True)
+        except:
             print('something gone wrong in "sample_of_print" method')
