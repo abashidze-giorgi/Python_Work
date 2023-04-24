@@ -30,9 +30,10 @@ class FileWork:
             'cash': [],
             'pos': [],
             'cards': [],
-            'bad': []
+            'NA': []
         }
         file_content = read_file_and_return_list.open_file(file_path)
+        index = 1
         for line in file_content:
             person = line.split(";")
 
@@ -43,7 +44,7 @@ class FileWork:
 
             name_last_name = person[4].split(' ')
             name = name_last_name[1]
-            last_name = name_last_name[0]
+            # last_name = name_last_name[0]
             full_name = person[4]
             pay_method = person[7]
             birth_year = person[8].split('.')[2]
@@ -51,20 +52,25 @@ class FileWork:
             phone_number = person[0]
             normalize_phone_number = self.__normalize_phone_number(phone_number)
             if normalize_phone_number == '':
-                pay_method = 'bad'
+                pay_method = 'NA'
                 normalize_phone_number = person[0]
-            list_len = len(data[pay_method]) + 1
-            person = {
-                'id': list_len,
-                'name': name,
-                'lastName': last_name,
-                'fullName': full_name,
-                'phone': normalize_phone_number,
-                'birthYear': birth_year,
-                'age': age,
-                'payMethod': pay_method
-            }
-
+                person = {
+                    'id': index,
+                    'name': f'{name} {name_last_name[2]}',
+                    'phone': normalize_phone_number,
+                    'payMethod': pay_method
+                    }
+            else:
+                list_len = len(data[pay_method]) + 1
+                person = {
+                    'id': list_len,
+                    'fullName': full_name,
+                    'phone': normalize_phone_number,
+                    'birthYear': birth_year,
+                    'age': age,
+                    'payMethod': pay_method
+                    }
+            index += 1
             data[pay_method].append(person)
         print(type(data))
         for file in data:
