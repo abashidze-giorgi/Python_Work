@@ -18,7 +18,7 @@ class DataAnalysis:
         list_of_file_names = self.get_file_names_from_directory()
         self.find_and_print_repeteably_phone_numbers(list_of_file_names)
         self.print_bad_phone_numbers(list_of_file_names)
-
+        self.find_same_last_name_persons(list_of_file_names)
     def get_file_names_from_directory(self,) -> list:
         res = []
 
@@ -64,12 +64,13 @@ class DataAnalysis:
                 except:
                     print('something gone wrong in "find_and_print_repeteably_phone_numbers" method')
         if non_unique_phone_numbers > 0:
-            print(
-                f"Non unique phone numbers count: {non_unique_phone_numbers}")
+            print("")
+            print(f"Повторяющиеся номера телефонов в файлах:: {non_unique_phone_numbers}")
             self.sample_of_print(non_unique_phone_number_person_list)
 
     def print_bad_phone_numbers(self, list_of_files):
         dict_data = []
+
         for name in list_of_files:
             file_path = os.path.join(self.dir_path, name)
             if os.path.isfile(os.path.join(self.dir_path, name)):
@@ -80,10 +81,42 @@ class DataAnalysis:
                     dictionary = eval(line)
                     if dictionary['payMethod'] == 'bad':
                         dict_data.append(dictionary)
-                print('')
-
+        print('')
         print('Кривые номера')
         self.sample_of_print(dict_data)
+
+    def find_same_last_name_persons(self, list_of_files):
+        same_person_data = []
+        temp_list = []
+        checked_persons = []
+
+        for name in list_of_files:
+            file_path = os.path.join(self.dir_path, name)
+            if os.path.isfile(os.path.join(self.dir_path, name)):
+                file_content = read_file_and_return_list.open_file(file_path)
+                string_list = [string.strip() for string in file_content]
+
+                for line in string_list:
+                    dictionary = eval(line)
+                    temp_list.append(dictionary['lastName'])
+
+        for lastName in temp_list:
+            if lastName not in checked_persons:
+                checked_persons.append(lastName)
+                last_name_count = temp_list.count(lastName)
+                if(last_name_count) > 1:
+                    same_person = {
+                        'lastName': lastName,
+                        'count' : last_name_count
+                    }
+                    same_person_data.append(same_person)
+        fullsame = 0
+        for la in same_person_data:
+            fullsame += la['count']
+
+        newlist = set(temp_list)
+        print (len(newlist))
+        print(fullsame)
 
     def sample_of_print(self, data):
         try:
