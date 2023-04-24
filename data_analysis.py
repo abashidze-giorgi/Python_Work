@@ -113,11 +113,9 @@ class DataAnalysis:
         fullsame = 0
         for la in same_person_data:
             fullsame += la['count']
-
-        newlist = set(temp_list)
         print(f'Всего однофамильцев - {fullsame}')
         print(f'Количество повторяющихся фамилии -  - {len(same_person_data)}')
-        self.sample_of_print(same_person_data)
+        #self.sample_of_print(same_person_data)
     def sample_of_print(self, data):
         try:
             headers = data[0].keys()

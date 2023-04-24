@@ -40,9 +40,9 @@ class FileWork:
             найдены,
             """
 
-            name_last_name = person[3].split(' ')
-            name = name_last_name[0]
-            last_name = name_last_name[1]
+            name_last_name = person[4].split(' ')
+            name = name_last_name[1]
+            last_name = name_last_name[0]
             full_name = person[4]
             pay_method = person[7]
             birth_year = person[8].split('.')[2]
