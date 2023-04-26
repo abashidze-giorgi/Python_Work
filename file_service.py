@@ -19,7 +19,9 @@ class FileWork:
             os.makedirs(output_directory)
         saved_file_path = self.__download_file(url, output_directory)
         big_data = self.__parse_file(saved_file_path)
+
         delete_file.delete_file(saved_file_path)
+
         self.file_list = self.__diversification_data_and_save_files(big_data, output_directory)
 
     def __download_file(self, url: str, output_directory: str) -> str:
