@@ -15,6 +15,8 @@ class FileWork:
     file_list = []
 
     def __init__(self, url: str, output_directory: str):
+        if not os.path.exists(output_directory):
+            os.makedirs(output_directory)
         saved_file_path = self.__download_file(url, output_directory)
         big_data = self.__parse_file(saved_file_path)
         delete_file.delete_file(saved_file_path)
