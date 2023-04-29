@@ -13,21 +13,21 @@ class FileWork:
     file_suffix = '_h.csv'
     phone_number_len = 11
     file_list = []
+    data = None
 
     def __init__(self, url: str, output_directory: str):
         if not os.path.exists(output_directory):
             os.makedirs(output_directory)
         saved_file_path = self.__download_file(url, output_directory)
-        big_data = self.__parse_file(saved_file_path)
+        self.data = self.__parse_file(saved_file_path)
 
         delete_file.delete_file(saved_file_path)
-
-        self.file_list = self.__diversification_data_and_save_files(big_data, output_directory)
+        # self.file_list = self.__diversification_data_and_save_files(big_data, output_directory)
 
     def __download_file(self, url: str, output_directory: str) -> str:
-        saved_file_name = os.path.join(output_directory, os.path.basename(url))
-        urllib.request.urlretrieve(url, saved_file_name)
-        return saved_file_name
+        saved_file_path = os.path.join(output_directory, os.path.basename(url))
+        urllib.request.urlretrieve(url, saved_file_path)
+        return saved_file_path
 
     def __parse_file(self, file_path: str) -> dict:
         data = {
@@ -93,18 +93,18 @@ class FileWork:
     def __get_person_age(self, birth_day: str) -> int:
         return datetime.datetime.now().year - int(birth_day)
 
-    def __diversification_data_and_save_files(self, big_data: dict, output_folder: str) -> list:
-        file_names = []
-
-        for dictionary in big_data.items():
-            pay_method_name = dictionary[0]
-            filename = os.path.join(os.path.expanduser('~'), output_folder,
-                                    pay_method_name + self.file_suffix)
-            file_names.append(filename)
-            file_encoding = get_file_encoding.get_encoding(filename)
-            with open(filename, 'w', encoding=file_encoding) as f:
-                for item in dictionary[1]:
-                    f.write('%s\n' % item)
-        return file_names
-
-
+    def get_data(self):
+        return self.data
+    # def __diversification_data_and_save_files(self, big_data: dict, output_folder: str) -> list:
+    #     file_names = []
+    #
+    #     for dictionary in big_data.items():
+    #         pay_method_name = dictionary[0]
+    #         filename = os.path.join(os.path.expanduser('~'), output_folder,
+    #                                 pay_method_name + self.file_suffix)
+    #         file_names.append(filename)
+    #         file_encoding = get_file_encoding.get_encoding(filename)
+    #         with open(filename, 'w', encoding=file_encoding) as f:
+    #             for item in dictionary[1]:
+    #                 f.write('%s\n' % item)
+    #     return file_names
