@@ -101,7 +101,7 @@ class FileWork:
     def get_data(self):
         return self.data
 
-    def __save_files(self, data: dict, output_folder: str)
+    def __save_files(self, data: dict, output_folder: str):
         file_names = []
 
         for key, dictionary in data.items():
