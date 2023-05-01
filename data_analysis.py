@@ -108,7 +108,7 @@ class DataAnalysis:
                 data_list = data[list_name]
                 for row in data_list:
                     if row['payMethod'] != 'NA':
-                        temp_list.append(row['birthYear'])
+                        temp_list.append(row['birthYear'].split('.')[2])
             except:
                 None
 
