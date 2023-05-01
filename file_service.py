@@ -20,9 +20,8 @@ class FileWork:
             os.makedirs(output_directory)
         saved_file_path = self.__download_file(url, output_directory)
         self.data = self.__parse_file(saved_file_path)
-
+        self.__save_files(self.data, output_directory)
         delete_file.delete_file(saved_file_path)
-        # self.file_list = self.__diversification_data_and_save_files(big_data, output_directory)
 
     def __download_file(self, url: str, output_directory: str) -> str:
         saved_file_path = os.path.join(output_directory, os.path.basename(url))
@@ -51,8 +50,8 @@ class FileWork:
             # last_name = name_last_name[0]
             full_name = person[4]
             pay_method = person[7]
-            birth_year = person[8].split('.')[2]
-            age = self.__get_person_age(birth_year)
+            birth_day = person[8]
+            age = self.__get_person_age(birth_day)
             phone_number = person[0]
             normalize_phone_number = self.__normalize_phone_number(phone_number)
             if normalize_phone_number == '':
@@ -70,7 +69,7 @@ class FileWork:
                     'id': list_len,
                     'fullName': full_name,
                     'phone': normalize_phone_number,
-                    'birthYear': birth_year,
+                    'birthYear': birth_day,
                     'age': age,
                     'payMethod': pay_method
                     }
@@ -91,20 +90,26 @@ class FileWork:
             return ''
 
     def __get_person_age(self, birth_day: str) -> int:
-        return datetime.datetime.now().year - int(birth_day)
+        birth_date = datetime.datetime.strptime(birth_day, '%d.%m.%Y').date()
+        current_date = datetime.date.today()
+        age_timedelta = current_date - birth_date
+        age_years = age_timedelta.days // 365
+        age_months = (age_timedelta.days % 365) // 30
+        age_days = (age_timedelta.days % 365) % 30
+        return f"{age_years} Год, {age_months} Месяцев и {age_days} Дней"
 
     def get_data(self):
         return self.data
-    # def __diversification_data_and_save_files(self, big_data: dict, output_folder: str) -> list:
-    #     file_names = []
-    #
-    #     for dictionary in big_data.items():
-    #         pay_method_name = dictionary[0]
-    #         filename = os.path.join(os.path.expanduser('~'), output_folder,
-    #                                 pay_method_name + self.file_suffix)
-    #         file_names.append(filename)
-    #         file_encoding = get_file_encoding.get_encoding(filename)
-    #         with open(filename, 'w', encoding=file_encoding) as f:
-    #             for item in dictionary[1]:
-    #                 f.write('%s\n' % item)
-    #     return file_names
+
+    def __save_files(self, data: dict, output_folder: str) -> list:
+        file_names = []
+
+        for key, dictionary in data.items():
+            if key == 'cash' or key == 'cards' or key == 'pos':
+                filename = os.path.join(os.path.expanduser('~'), output_folder,
+                                        key + self.file_suffix)
+                file_names.append(filename)
+
+                with open(filename, 'w') as f:  # Open the file to write data
+                    for item in dictionary:
+                        f.write('%s\n' % item)  # Use the file object to write data to the file
