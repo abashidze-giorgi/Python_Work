@@ -89,7 +89,7 @@ class FileWork:
         else:
             return ''
 
-    def __get_person_age(self, birth_day: str) -> int:
+    def __get_person_age(self, birth_day: str) -> str:
         birth_date = datetime.datetime.strptime(birth_day, '%d.%m.%Y').date()
         current_date = datetime.date.today()
         age_timedelta = current_date - birth_date
